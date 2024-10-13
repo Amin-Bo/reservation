@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const salleRoutes = require('./routes/salle');
+const reservationRoutes = require('./routes/reservation');
+const errorHandler = require('./middleware/errorHandler');
 
 dotenv.config();
 
@@ -25,7 +27,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/salles', salleRoutes);
+app.use('/api/reservations', reservationRoutes);
 
+// Error handling middleware
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
